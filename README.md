@@ -1,121 +1,132 @@
-# 🌍 Global Terrorism ML Project
+# 🌍 Global Terrorism Analysis & Machine Learning Prediction Project
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
 ![Jupyter Notebook](https://img.shields.io/badge/Jupyter-Notebook-orange)
+![Streamlit](https://img.shields.io/badge/Streamlit-App-red)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 ![License](https://img.shields.io/badge/License-Academic-green)
 
 ## 📖 Project Overview
 
-This repository presents a **comprehensive Exploratory Data Analysis (EDA)** of the [Global Terrorism Database](https://www.start.umd.edu/data-tools/gtd), covering **289,796 incidents worldwide (1970–2020)**. The project focuses on **data cleaning, temporal and spatial terrorism pattern analysis**, and sets the foundation for **predictive modeling** to attribute incidents to terrorist groups.
+This project performs **Exploratory Data Analysis (EDA)** and **Machine Learning modeling** on the official  
+**Global Terrorism Database (GTD)**, covering **289,796 terrorism incidents worldwide (1970–2020)**.
 
-This project was developed by **Ayush Gupte (PRN: 22070521120, Batch 2022–26)** as part of an academic Machine Learning module.
+The goal is to:
+- Understand **global terrorism patterns**
+- Identify **major hotspots**
+- Analyze **attack methods and responsible groups**
+- Train an ML model to **predict the Terrorist Group responsible** for an attack
 
----
-
-## 📊 Dataset Description
-
-- **Source:** [GTD](https://www.start.umd.edu/data-tools/gtd)  
-- **Timeframe:** 1970–2020  
-- **Records:** 289,796  
-- **Original Features:** 135 → **Reduced to 11 (model-ready)**  
-- **Target Variable:** `GroupName` (responsible terrorist group)  
-
-**Final Selected Columns:**  
-`Year`, `Month`, `Country`, `Region`, `Latitude`, `Longitude`, `AttackType`, `TargetType`, `WeaponType`, `Suicide`, `GroupName`
+Developed by **Ayush Gupte (PRN: 22070521120 | Batch: 2022–26)** under the Machine Learning course module.
 
 ---
 
-## 🔍 EDA Methodology
+## 📂 Dataset
 
-The EDA (in `Main_EDA_3.ipynb`) explores **univariate, bivariate, and multivariate** relationships to uncover key patterns.
+| Property | Details |
+|---------|---------|
+| **Source** | Global Terrorism Database (GTD) |
+| **Timeline** | 1970–2020 |
+| **Records** | 289,796 incidents |
+| **Initial Features** | 135 |
+| **Selected Features for ML** | 11 |
 
-### **1. Temporal Analysis**
-- Year-wise incident trend (**1970–2020**):  
-  ![Yearly Incidents](Global_Terrorism_Incident_Map.png)
-- **Insight:** Sharp rise in incidents post-2000, **peak in 2014** (ISIL surge).
-
-### **2. Geographical Hotspots**
-- **Top 10 affected countries:** Iraq, Pakistan, Afghanistan lead.
-- **Heatmaps by region and attack type** reveal dominant methods across continents.
-
-### **3. Attack & Group Profiling**
-- **Most common attack type:** **Bombings/Explosions** (twice as frequent as Armed Assaults).  
-- **Suicide Attacks:** <5% of total but highly impactful.  
-- **Top Groups:** **Taliban & ISIL** dominate post-2010.
-
-### **4. Interactive Visualizations**
-- **Geospatial map:** Explore incidents by location (HTML map in repo: `global_terrorism_map.html`).
-
----
-
-## 🧹 Data Cleaning Pipeline
-
-Implemented in `Data_Cleaning_2.ipynb`:
-
-1. **Dropped irrelevant & high-missing (>20%) columns**.  
-2. **Selected 10 features + target** for modeling relevance.  
-3. **Imputation:**  
-   - Mean for numerical (`Latitude`, `Longitude`).  
-   - Mode for categorical (`AttackType`, `WeaponType`).  
-4. **Standardized naming** (`Unknown` → `Unknown_Group`).  
-5. **Saved final dataset:** `globalterrorismdb_cleaned.csv`.
-
----
-
-
-## 📂 Project Structure
-
+### **Final Selected Columns**
 ```
-├── Cleaned Dataset/                # Cleaned GTD dataset
-├── Original Dataset/               # Raw GTD dataset
-├── Data_Cleaning_2.ipynb           # Data preprocessing
-├── Main_EDA_3.ipynb                # EDA & insights
-├── Global_Terrorism_Incident_Map.png  # Map visualization
-├── global_terrorism_map.html       # Interactive map
-├── ML Report.docx                  # Detailed project report
-└── README.md                       # Project documentation
+Year, Month, Country, Region, Latitude, Longitude, 
+AttackType, TargetType, WeaponType, Suicide, GroupName
 ```
 
 ---
 
-## 🚀 Future Enhancements
+## 🔍 Exploratory Data Analysis (Main_EDA_3.ipynb)
 
-- **Model Development:** Implement & tune **Random Forest, XGBoost, and Neural Networks** for group prediction.  
-- **Feature Engineering:** Add derived variables (e.g., geospatial clusters, temporal seasonality).  
-- **Deployment:** Build an interactive **Streamlit/Dash** dashboard for real-time insights.  
-- **Model Explainability:** Integrate **SHAP values** for understanding ML decisions.
+### **1️⃣ Global Terrorism Trend (1970–2020)**
+![Global Terrorism Map](Global_Terrorism_Incident_Map.png)
 
----
+### **2️⃣ Terrorist Pattern Across Indian Cities**
+![Terrorism in India](India_cities_with_terrorist_attack.png)
 
-## 🎯 Key Insights
-
-- **2014:** Peak in terrorism due to ISIL.  
-- **Geographical Hotspots:** Middle East & South Asia dominate post-2000.  
-- **Tactics:** **Bombings** remain the most common method.  
-- **Groups:** Taliban & ISIL lead in recent decades.  
-- **Suicide Attacks:** Rare but disproportionately impactful.
+### **3️⃣ Key Insights**
+- Strong rise in attacks **post-2000**, peaking in **2014** (ISIL expansion)
+- **Middle East & South Asia** are the most affected regions
+- **Bombings/Explosions** are the most common attack method
+- **Taliban & ISIL** dominate recent decades
+- **Suicide attacks** are <5% but extremely deadly
 
 ---
 
-## ⚙️ Setup Instructions
+## 🧹 Data Preprocessing (Data_Cleaning_2.ipynb)
 
-### **1. Clone Repository**
+- Removed noisy / irrelevant columns
+- Handled missing values (Mean/Mode imputation)
+- Normalized labeled categories
+- Created final cleaned dataset → `Cleaned Dataset/`
+
+---
+
+## 🤖 Machine Learning Model (Main_ML_file.ipynb)
+
+This notebook includes **both EDA + ML Model Development**, including:
+
+| Step | Description |
+|------|-------------|
+| Label Encoding | Encoded categorical features |
+| Train-Test Split | 80/20 |
+| Algorithms Used | Random Forest (primary model) |
+| Model Output | Classification report & accuracy score |
+| Saved Model | `attack_type_label_encoder.pkl` |
+
+---
+
+## 💻 Streamlit Application (app.py)
+
+A **web-based visualization & prediction dashboard** using **Streamlit**.
+
+### Run the App:
 ```bash
-git clone https://github.com/AyushGupte-22/Global_Terrorism_ML_Project_120.git
-cd Global_Terrorism_ML_Project_120
+pip install -r requirements.txt
+streamlit run app.py
 ```
+
+---
+
+## 📁 Project Structure
+
+```
+├── Original Dataset/
+├── Cleaned Dataset/
+├── Data_Cleaning_2.ipynb
+├── Main_EDA_3.ipynb
+├── Main_ML_file.ipynb         # Contains EDA + ML modeling
+├── app.py                     # Streamlit dashboard app
+├── Global_Terrorism_Incident_Map.png
+├── India_cities_with_terrorist_attack.png
+├── global_terrorism_map.html  # Interactive geospatial map
+├── attack_type_label_encoder.pkl
+├── ML_Output_GTD.pdf
+└── README.md
+```
+
+---
+
+## 🚀 Future Scope
+
+- Implement **XGBoost, LSTM sequence models**
+- Add **SHAP-based explainability**
+- Host Streamlit app on **Cloud / Heroku / AWS**
+- Add **real-time terrorism event monitoring dashboard**
+
+---
 
 ## 👤 Author
 
 **Ayush Gupte**  
-PRN: 22070521120 | Batch: 2022–26 | Section: C  
-GitHub: [AyushGupte-22](https://github.com/AyushGupte-22)
+PRN: 22070521120 | Batch: 2022–26  
+GitHub: https://github.com/AyushGupte-22  
 
 ---
 
 ## 📜 License
-This project is for **academic & research purposes only**.  
-Data is sourced from [GTD](https://www.start.umd.edu/data-tools/gtd).
-
----
+This repository is intended strictly for **academic and research use only**.  
+Dataset credit: **Global Terrorism Database (GTD)**.
